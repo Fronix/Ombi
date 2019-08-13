@@ -29,7 +29,8 @@ export class AppComponent implements OnInit {
 
     private checkedForUpdate: boolean;
 
-    constructor(public notificationService: NotificationService,
+    constructor(
+        public notificationService: NotificationService,
         public authService: AuthService,
         private readonly router: Router,
         private readonly settingsService: SettingsService,
@@ -93,8 +94,7 @@ export class AppComponent implements OnInit {
 
     public redirectIfNotIframe() {
         setTimeout(() => {
-            //window.location.replace('https//' + window.location.host + '/#Requests');
-            window.location.replace('https://darthvader.fronix.se/#Requests');
+            window.location.replace("https//' + window.location.host + '/#Requests");
         }, 500);
     }
 

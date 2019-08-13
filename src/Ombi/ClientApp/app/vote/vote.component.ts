@@ -18,33 +18,33 @@ export class VoteComponent implements OnInit {
     public completedVotes: IVoteViewModel[];
     public VoteType = VoteType;
     public panelImage: string;
-    @ViewChild("op") public overlayPanel: OverlayPanel;
+    @ViewChild("op", { static: true }) public overlayPanel: OverlayPanel;
 
     constructor(private voteService: VoteService, private notificationSerivce: NotificationService) { }
 
     public async ngOnInit() {
         this.viewModel = await this.voteService.getModel();
         this.filterLists();
-     }
+    }
 
-     public selectCurrentTab() {
+    public selectCurrentTab() {
         this.showCurrent = true;
         this.showCompleted = false;
     }
-    
+
     public selectCompletedVotesTab() {
         this.showCurrent = false;
         this.showCompleted = true;
     }
 
-     public toggle(event: any, image: string) {
+    public toggle(event: any, image: string) {
         this.panelImage = image;
         this.overlayPanel.toggle(event);
-     }
+    }
 
-     public async upvote(vm: IVoteViewModel) {
-        let result: IVoteEngineResult = {errorMessage:"", isError: false, message:"",result:false};
-        switch(vm.requestType) {
+    public async upvote(vm: IVoteViewModel) {
+        let result: IVoteEngineResult = { errorMessage: "", isError: false, message: "", result: false };
+        switch (vm.requestType) {
             case RequestTypes.Album:
                 result = await this.voteService.upvoteAlbum(vm.requestId);
                 break;
@@ -56,7 +56,7 @@ export class VoteComponent implements OnInit {
                 break;
         }
 
-        if(result.isError) {
+        if (result.isError) {
             this.notificationSerivce.error(result.errorMessage);
         } else {
             this.notificationSerivce.success("Voted!");
@@ -67,8 +67,8 @@ export class VoteComponent implements OnInit {
     }
 
     public async downvote(vm: IVoteViewModel) {
-        let result: IVoteEngineResult = {errorMessage:"", isError: false, message:"",result:false};
-        switch(vm.requestType) {
+        let result: IVoteEngineResult = { errorMessage: "", isError: false, message: "", result: false };
+        switch (vm.requestType) {
             case RequestTypes.Album:
                 result = await this.voteService.downvoteAlbum(vm.requestId);
                 break;
@@ -80,10 +80,10 @@ export class VoteComponent implements OnInit {
                 break;
         }
 
-        if(result.isError) {
+        if (result.isError) {
             this.notificationSerivce.error(result.errorMessage);
         } else {
-            this.notificationSerivce.success("Voted!"); 
+            this.notificationSerivce.success("Voted!");
             vm.alreadyVoted = true;
             vm.myVote = VoteType.Downvote;
             this.filterLists();
